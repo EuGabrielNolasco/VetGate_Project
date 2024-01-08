@@ -10,11 +10,11 @@
     "require": {
         "php": "8.2.4",
         "guzzlehttp/guzzle": "^7.2",
-        "laravel/framework": "^8.0",
-        "laravel/jetstream": "^2.0",
+        "laravel/framework": "^10.34.2",
+        "laravel/jetstream": "^4.1.2",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
-        "livewire/livewire": "^2.0",
+        "livewire/livewire": "^3.2.2",
         "nesbot/carbon": "^2.72"
     },
     "require-dev": {
