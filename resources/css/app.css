@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+[x-cloak] {
+    display: none;
+}
+.bg-light {
+    background-color: #f8f9fa !important;
+}
+.container {
+    background-color: #f8f9fa !important;
+}
