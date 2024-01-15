@@ -17,6 +17,19 @@
         <div class="text-center my-5">
         <h1>Grafico  Linha</h1>
         <hr />
+        <div class="text-center my-5">
+    <form method="get" action="{{ route('statistics-index') }}">
+        <label for="year">Escolha o ano:</label>
+        <select name="year" id="year">
+            @for ($i = $currentDate->year; $i >= $currentDate->year - 10; $i--)
+                <option value="{{ $i }}" {{ $selectedYear == $i ? 'selected' : '' }}>{{ $i }}</option>
+            @endfor
+        </select>
+        <button type="submit">Atualizar</button>
+    </form>
+</div>
+
+
     </div>        <div class="mx-auto" style="width: 100%;">
             <canvas id="graficoLinha" height="300"></canvas>
         </div><br>

@@ -37,6 +37,7 @@ class StatisticsController extends Controller
                 11 => 'Novembro',
                 12 => 'Dezembro',
             ]);
+
             $vaccinationMonthlyCounts = $months->map(function ($name, $month) use ($currentDate) {
                 return [
                     'month' => $name,
@@ -66,16 +67,30 @@ class StatisticsController extends Controller
                 ];
             });
 
+            $selectedYear = request()->get('year', $currentDate->year);
+
             $totalAnimais = Animal::count();
             $totalVacinas = Vaccination::count();
             $animaisComVacinas = Animal::whereHas('vaccinations')->count();
             $animaisSemVacinas = $totalAnimais - $animaisComVacinas;
 
-            return view('admin.statistics', compact('totalAnimais', 'animaisComVacinas', 'animaisSemVacinas', 'totalVacinas', 'userMonthlyCounts', 'animalMonthlyCounts', 'vaccinationMonthlyCounts'));
+            return view('admin.statistics', compact('totalAnimais', 'animaisComVacinas', 'animaisSemVacinas', 'totalVacinas', 'userMonthlyCounts', 'animalMonthlyCounts', 'vaccinationMonthlyCounts', 'selectedYear', 'currentDate'));
         } else {
             $quantidadeAnimaisCadastrados = Animal::count();
 
             return view('dashboard')->with('quantidadeAnimaisCadastrados', $quantidadeAnimaisCadastrados);
         }
+    }
+    private function getMonthlyCounts($tableName, $months, $currentDate, $selectedYear)
+    {
+        return $months->map(function ($name, $month) use ($currentDate, $tableName, $selectedYear) {
+            return [
+                'month' => $name,
+                'count' => DB::table($tableName)
+                    ->whereMonth('created_at', $month)
+                    ->whereYear('created_at', '=', $selectedYear)
+                    ->count(),
+            ];
+        });
     }
 }
