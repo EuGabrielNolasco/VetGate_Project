@@ -153,9 +153,10 @@
 
             <br>
             <div class="col-md-6">
-    <footer class="bg-light text-dark py-4 with-top-shadow" style="background-color: #f8f9fa;">
+    <footer class="bg-light text-dark with-top-shadow" style="background-color: #f8f9fa;">
         <div class="container text-center">
-            <p class="text-2xl text-gray-800">
+            <br>
+            <p class=" text-gray-800">
                 2023 Vet Gate &copy; | Todos os <a href="{{route('rights-index')}}">direitos</a> reservados.
             </p>
         </div>
