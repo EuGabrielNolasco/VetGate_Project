@@ -1,0 +1,9 @@
+// resources/sass/variables.scss
+
+@if (not variable-exists('$primary-color')) {
+    // Defina suas variáveis aqui
+    $primary-color: #3490dc;
+    $secondary-color: #ffed4a;
+    // ... outras variáveis
+  }
+  

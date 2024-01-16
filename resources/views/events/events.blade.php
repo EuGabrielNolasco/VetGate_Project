@@ -7,9 +7,8 @@
 
     {{-- Search Container --}}
     <div id="search-container" class="img-fluid position-relative d-flex align-items-center">
-        <!-- Imagem para dispositivos pequenos (por exemplo, celulares) -->
-        <img src="{{ asset('img/banner.jpg') }}" srcset="{{ asset('img/banner.jpg') }} 500w, {{ asset('img/banner.jpg') }} 800w" sizes="(max-width: 500px) 100vw, (max-width: 800px) 80vw, 100vw" class="img-fluid" alt="Imagem Responsiva">
-    </div>
+    <!-- Sua imagem responsiva -->
+    <img src="{{ secure_asset('img/banner.jpg') }}" srcset="{{ secure_asset('img/banner.jpg') }} 500w, {{ secure_asset('img/banner.jpg') }} 800w" sizes="(max-width: 500px) 100vw, (max-width: 800px) 80vw, 100vw" class="img-fluid" alt="Imagem Responsiva">    </div>
 
     {{-- Event listing --}}
     <div class="container my-5">
@@ -33,12 +32,13 @@
                         @if ($event->private == 1)
                         <span class="text-muted">Privado</span>
                         @else
-                        <span class="text-muted">Público  </span>
+                        <span class="text-muted">Público </span>
                         @endif
-                        <div class="float-right">
+                        <br>
+                        <div class="float-center">
                             Em breve
                         </div>
-                    
+
                     </div>
 
                     <div class="card-body">
@@ -72,16 +72,17 @@
 
             @if ($eventDate < $today) <div class="col-lg-4 col-md-6 col-sm-12">
                 <div class="card mb-5 shadow-sm text-center border-danger">
-                <div class="card-header text-center">
+                    <div class="card-header text-center">
                         @if ($event->private == 1)
                         <span class="text-muted">Privado</span>
                         @else
-                        <span class="text-muted">Público  </span>
+                        <span class="text-muted">Público </span>
                         @endif
-                        <div class="float-right">
+                        <br>
+                        <div class="float-center">
                             Evento Realizado
                         </div>
-                    
+
                     </div>
                     <div class="card-body">
                         <img src="./img/events/{{ $event->image }}" class="img-fluid w-100 h-auto" alt="{{ $event->title }}" />
@@ -96,7 +97,7 @@
         @endif
         @endforeach
     </div>
-    
+
     </div>
-    
+
 </x-app-layout>

@@ -35,7 +35,6 @@
         </div><br>
     </div>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" integrity="sha384-TX8qUY4rW9NcRMvz9GomMAOoOSZrsbHiGhXPp9uWHb8khoUzgPBM9DB7lNbr7GRj" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>

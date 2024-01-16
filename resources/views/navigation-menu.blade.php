@@ -1,5 +1,6 @@
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Menu de Navegação Primária -->
+    
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
@@ -164,13 +165,14 @@
                             <div class="border-t border-gray-200"></div>
 
                             <!-- Autenticação -->
-                            <form method="POST" action="{{ route('logout') }}" x-data>
+                            <form method="POST" action="{{ secure_url('logout') }}" x-data>
                                 @csrf
 
-                                <x-dropdown-link href="{{ route('logout') }}" @click.prevent="$root.submit();">
+                                <x-dropdown-link href="{{ secure_url('logout') }}" @click.prevent="$root.submit();">
                                     {{ __('Sair') }}
                                 </x-dropdown-link>
                             </form>
+
                         </x-slot>
                     </x-dropdown>
                 </div>
@@ -216,13 +218,13 @@
                 {{ __('Admin') }}
             </x-responsive-nav-link>
 
-        </div>  
+        </div>
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link href="{{route('statistics-index')}}" :active="request()->routeIs('statistics-index')">
                 {{ __('Estatisticas') }}
             </x-responsive-nav-link>
 
-        </div> 
+        </div>
 
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link href="{{ Route('animals-index') }}" :active="request()->routeIs('animals-index')">
@@ -290,13 +292,14 @@
                 @endif
 
                 <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}" x-data>
+                <form method="POST" action="{{ secure_url('logout') }}" x-data>
                     @csrf
 
-                    <x-responsive-nav-link href="{{ route('logout') }}" @click.prevent="$root.submit();">
+                    <x-responsive-nav-link href="{{ secure_url('logout') }}" @click.prevent="$root.submit();">
                         {{ __('Sair') }}
                     </x-responsive-nav-link>
                 </form>
+
 
                 <!-- Team Management -->
                 @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
