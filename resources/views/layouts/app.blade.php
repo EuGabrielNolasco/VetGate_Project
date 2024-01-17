@@ -51,30 +51,7 @@
             }
         }
 
-        html {
-            position: relative;
-            min-height: 100%;
-        }
-
-        body {
-            margin-bottom: 60px;
-            /* Ajuste conforme necessário para a altura do seu footer */
-        }
-
-        footer {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 60px;
-            margin-bottom: 35px;
-
-            /* Ajuste conforme necessário para a altura do seu footer */
-            background-color: light;
-            /* Ajuste a cor de fundo conforme necessário */
-            text-align: center;
-            padding-top: 15px;
-        }
-    </style>
+</style>
 
     <script>
         function goBack() {
@@ -149,17 +126,15 @@
 
             {{ $slot }}
 
-            <br>
-            <div class="col-md-6">
-                <footer class="bg-light text-dark with-top-shadow" style="background-color: #f8f9fa;">
-                    <div class="container text-center">
-                        <br>
-                        <p class=" text-gray-800">
-                            2023 Vet Gate &copy; | Todos os <a href="{{route('rights-index')}}">direitos</a> reservados.
-                        </p>
-                    </div>
-                </footer>
-            </div>
+            <footer style="background-color: light;">
+            <br><br>
+                <div class="container text-center">
+                    <p>
+                        2023 Vet Gate &copy; | Todos os <a href="{{route('rights-index')}}">direitos</a> reservados.
+                    </p>
+                    <br>
+                </div>
+            </footer>
         </main>
 
 
