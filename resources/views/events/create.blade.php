@@ -1,7 +1,7 @@
 <x-app-layout>
   <x-slot name="header">
     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-      {{ __('Painel Admin') }}
+      {{ __('Painel') }}
     </h2>
   </x-slot>
   <br>
@@ -9,9 +9,9 @@
     @if(auth()->user()->id == 1)
     <div class="card col-sm-12">
       <div class="card-body">
-        <h5 class="card-title">Gerenciar Admins</h5>
-        <p class="card-text">Clique no botão abaixo para criar um admin e gerenciar os atuais.</p>
-        <a href="{{ route('admin-create') }}" class="btn btn-success">Gerenciar Admin</a>
+        <h5 class="card-title">Painel Administrador</h5>
+        <p class="card-text">Clique no botão abaixo para criar um admin, gerenciar os atuais e visualizar animais e vacinas deletadas.</p>
+        <a href="{{ route('admin-panel') }}" class="btn btn-success">Gerenciar Admin</a>
       </div>
     </div>
     @endif

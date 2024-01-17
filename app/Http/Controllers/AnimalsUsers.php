@@ -29,7 +29,8 @@ class AnimalsUsers extends Controller
             }
 
             $userId = $user ? $user->id : null;
-            $animals = Animal::where('user_id', $userId)->get();
+            $animals = Animal::where('deleted', 0)
+                ->where('user_id', $userId)->get();
 
             return view('animalsUsers.animals', ['animals' => $animals]);
         } else {
@@ -54,7 +55,8 @@ class AnimalsUsers extends Controller
                 'count' => $countAnimal,
                 'loggedInUser' => $user,
                 'species' => $species,
-            ]);        } else {
+            ]);
+        } else {
             $quantidadeAnimaisCadastrados = Animal::count();
 
             return view('dashboard')->with('quantidadeAnimaisCadastrados', $quantidadeAnimaisCadastrados);
@@ -73,12 +75,13 @@ class AnimalsUsers extends Controller
                 // A conversão falhou, retorne uma resposta adequada
                 return redirect()->back()->withErrors(['birth' => 'Formato de data inválido. Use o formato dd/mm/yyyy.']);
             }
+
             $dadosAnimal = $request->all();
             $dadosAnimal['birth'] = $dataNascimento->format('Y-m-d');
             $dadosAnimal['user_id'] = $user->id;
             $dadosAnimal['owner_name'] = $user->name;
+            $dadosAnimal['species'] = Species::where('id', $request->input('species'))->value('name');
             $countAnimal = Animal::where('user_id', Auth::user()->id)->count();
-
 
             if ($countAnimal < 10 || $userRole == 1) {
                 Animal::create($dadosAnimal);
@@ -93,6 +96,7 @@ class AnimalsUsers extends Controller
             return view('dashboard')->with('quantidadeAnimaisCadastrados', $quantidadeAnimaisCadastrados);
         }
     }
+
 
 
 
@@ -183,8 +187,9 @@ class AnimalsUsers extends Controller
             $userId = $user ? $user->id : null;
 
             $animal = Animal::findOrFail($id);
-            $animal->vaccinations()->delete();
-            $animal->delete();
+            $animal->deleted = 1;
+            $animal->user_id = null;
+            $animal->save();
 
             return redirect()->route('animals-index')->with('status', 'delete');
         } else {

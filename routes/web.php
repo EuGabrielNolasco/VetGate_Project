@@ -41,7 +41,6 @@ Route::prefix('/admin/animals')->group(function () {
     Route::get('/vaccinated/{page?}', [AnimalsController::class, 'showVaccinatedPaginated'])->name('animals-admin-filter-vaccinated');
 
     Route::get('/my-Animals/{page?}', [AnimalsController::class, 'myAnimals'])->name('animals-admin-filter-my-Animals');
-
 });
 
 
@@ -115,11 +114,11 @@ Route::prefix('/events')->group(function () {
     Route::get('/create/dashboard', [EventsController::class, 'dashboard'])->middleware('auth')->name('events-dashboard');
 
     Route::post('/searchAdmin', [UsuariosController::class, 'searchAdmin'])->name('usersAdmin-search');
-
 });
 
 Route::middleware(['auth', 'role:admin'])->prefix('/admin')->group(function () {
     Route::get('/view', [UsuariosController::class, 'adminView'])->name('admin-view');
+    Route::get('/panel', [UsuariosController::class, 'adminpanel'])->name('admin-panel');
     Route::get('/create', [UsuariosController::class, 'adminCreate'])->name('admin-create');
     Route::post('/store', [UsuariosController::class, 'adminStore'])->name('admin-store');
     Route::delete('/destroy/{id}', [UsuariosController::class, 'adminDestroy'])->where('id', '[0-9]+')->name('admin-destroy');
@@ -137,4 +136,5 @@ Route::get('/rights', function () {
 
 Route::get('/rights/privacy', function () {
     return view('admin.privacyPolicy
-    ');})->name('privacy-policy');
+    ');
+})->name('privacy-policy');

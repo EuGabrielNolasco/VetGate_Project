@@ -26,19 +26,19 @@ class UsuariosController extends Controller
     {
         $user = Auth::user() ?? null;
         $userRole = $user ? $user->role : null;
-    
+
         if ($userRole == 1) {
             $users = User::paginate(10); // Change the pagination as needed
             $animals = Animal::all();
-    
+
             Paginator::useBootstrap(); // This line is important for Bootstrap pagination styling
-    
+
             return view('admin.users', ['animals' => $animals, 'users' => $users]);
         } else {
             return view('dashboard');
         }
     }
-    
+
     public function indexAnimals(Request $request)
     {
         $user = Auth::user();
@@ -74,20 +74,20 @@ class UsuariosController extends Controller
         if ($user && ($user->id == 1 || $user->id == $userId)) {
             $user = User::findOrFail($userId);
             $animals = Animal::where('user_id', $userId)->get();
-        
+
             // Calcula a idade para cada animal
             foreach ($animals as $animal) {
                 $dataNascimento = Carbon::createFromFormat('Y-m-d', $animal->birth);
                 $idade = $dataNascimento->diffInYears(Carbon::now());
                 $animal->idade = $idade;
             }
-        
+
             $totalAnimais = $animals->count();
-        
+
             return view('admin.usersAdminAnimals', compact('user', 'animals', 'totalAnimais'));
         } else {
             $quantidadeAnimaisCadastrados = Animal::count();
-        
+
             return view('dashboard')->with('quantidadeAnimaisCadastrados', $quantidadeAnimaisCadastrados);
         }
     }
@@ -96,39 +96,38 @@ class UsuariosController extends Controller
     {
         $user = Auth::user() ?? null;
         $userRole = $user ? $user->role : null;
-    
+
         if ($userRole == 1) {
             $searchTerm = $request->input('search');
-    
+
             // Use o "withQueryString" para anexar o termo de pesquisa aos links de paginação
             $users = User::where('name', 'like', "%$searchTerm%")->paginate(10)->withQueryString();
-    
+
             return view('admin.users', compact('users'));
         } else {
             $quantidadeAnimaisCadastrados = Animal::count();
             return view('dashboard')->with('quantidadeAnimaisCadastrados', $quantidadeAnimaisCadastrados);
         }
     }
-    
+
     public function searchAdmin(Request $request)
     {
         $user = Auth::user() ?? null;
         $userRole = $user ? $user->role : null;
-        
+
         if ($userRole == 1) {
             // Código para pesquisar usuários aqui
             $searchTerm = $request->input('search');
             $users = User::where('name', 'like', "%$searchTerm%")->paginate(10)->withQueryString();
-            
+
             return view('admin.usersAdmin', compact('users'));
         } else {
             // Código para lidar com outras situações (não role igual a 1)
             $quantidadeAnimaisCadastrados = Animal::count();
             return view('dashboard')->with('quantidadeAnimaisCadastrados', $quantidadeAnimaisCadastrados);
         }
-        
     }
-    
+
     public function adminStore(Request $request)
     {
         $user = Auth::user() ?? null;
@@ -161,6 +160,17 @@ class UsuariosController extends Controller
         $quantidadeAnimaisCadastrados = Animal::count();
 
         return view('dashboard')->with('quantidadeAnimaisCadastrados', $quantidadeAnimaisCadastrados);
+    }
+    public function adminPanel()
+    {
+        $user = Auth::user() ?? null;
+        $userId = $user ? $user->id : null;
+
+        if ($userId == 1) {
+            return view('admin.panelAdmin');
+        } else {
+            return view('dashboard');
+        }
     }
     public function adminCreate()
     {
@@ -200,13 +210,18 @@ class UsuariosController extends Controller
 
             if ($user->animals->isNotEmpty()) {
                 foreach ($user->animals as $animal) {
+                    // Remover a associação do animal com o usuário
+                    $animal->user_id = null;
+                    $animal->deleted = 1;
+                    $animal->save();
+
+                    // Verificar e atualizar as vacinas associadas ao animal
                     if ($animal->vaccinations->isNotEmpty()) {
-                        foreach ($animal->vaccinations as $vacina) {
-                            $vacina->delete();
+                        foreach ($animal->vaccinations as $vaccination) {
+                            $vaccination->deleted = 1;
+                            $vaccination->save();
                         }
                     }
-
-                    $animal->delete();
                 }
             }
 

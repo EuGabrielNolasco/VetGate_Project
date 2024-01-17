@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('dewormed_status')->nullable();
             $table->string('date_dewormed')->nullable();
             $table->string('vaccinated_status')->nullable();
+            $table->boolean('deleted')->nullable()->default(0);
             $table->timestamps();
         });
     }

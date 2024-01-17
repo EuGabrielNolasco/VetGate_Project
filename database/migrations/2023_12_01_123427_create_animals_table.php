@@ -28,7 +28,8 @@ return new class extends Migration
             $table->string('size')->nullable();
             $table->string('fur_length')->nullable();
             $table->string('origin')->nullable();
-            $table->foreignId('user_id')->constrained(); // adiciona a chave estrangeira
+            $table->foreignId('user_id')->nullable()->constrained();
+            $table->boolean('deleted')->nullable()->default(0);
             $table->timestamps();
         });
     }

@@ -4,7 +4,7 @@ use Carbon\Carbon; ?>
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Animais do Administrador') }}
+        {{ __('Animais de :userName', ['userName' => $user->name]) }}
         </h2>
     </x-slot>
 

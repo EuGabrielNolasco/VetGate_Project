@@ -6,6 +6,9 @@
     </x-slot>
 
     <div class="container mt-5">
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+            <button type="button" class="btn btn-warning" onclick="goBack()">Voltar</button>
+        </div><br><br>
         <nav class="navbar navbar-light bg-light">
             <div class="container-fluid">
                 <a class="navbar-brand">Procurar por Nome</a>

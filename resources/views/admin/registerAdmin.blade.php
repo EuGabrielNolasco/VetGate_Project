@@ -1,24 +1,15 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Painel Admin') }}
+            {{ __('Registrar Administrador') }}
         </h2>
     </x-slot>
 
     <div class="container mt-5">
-    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
             <button type="button" class="btn btn-warning" onclick="goBack()">Voltar</button>
         </div>
-    <div class="card col-sm-12 mt-3">
-        <div class="card-body">
-            <h5 class="card-title">Gerenciar Admins</h5>
-            <p class="card-text">Clique no botão abaixo para gerenciar admins.</p>
-            <a href="{{ route('admin-view') }}" class="btn btn-primary">Gerenciar Admins</a>
-        </div>
-    </div>
-<br>
-    <h1>Registrar Administradores</h1>
-<hr>
+
         <x-authentication-card>
             <x-slot name="logo">
                 <x-authentication-card-logo />

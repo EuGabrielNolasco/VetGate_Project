@@ -15,27 +15,32 @@ class DeleteUser implements DeletesUsers
     {
         // Obter todos os animais do usuário
         $animals = Animal::where('user_id', $user->id)->get();
-    
+
         // Verificar se há animais antes de continuar
         if ($animals->isNotEmpty()) {
             foreach ($animals as $animal) {
-                // Excluir todas as vacinas associadas ao animal
-                $animal->vaccinations()->delete();
+                // Remover o vínculo do animal com o usuário
+                $animal->deleted = 1;
+                $animal->user_id = null;
+                $animal->save();
+
+                // Verificar e atualizar as vacinas associadas ao animal
+                if ($animal->vaccinations->isNotEmpty()) {
+                    foreach ($animal->vaccinations as $vaccination) {
+                        $vaccination->deleted = 1;
+                        $vaccination->save();
+                    }
+                }
             }
-    
-            // Excluir todos os animais do usuário
-            Animal::where('user_id', $user->id)->delete();
         }
-    
+
         // Excluir a foto do perfil
         $user->deleteProfilePhoto();
-    
+
         // Revogar todos os tokens de acesso do usuário
         $user->tokens->each->delete();
-    
+
         // Excluir o usuário
         $user->delete();
     }
-    
-
 }

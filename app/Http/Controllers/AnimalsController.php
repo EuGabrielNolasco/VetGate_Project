@@ -35,8 +35,10 @@ class AnimalsController extends Controller
         $userRole = $user ? $user->role : null;
 
         if ($userRole == 1) {
-            $nonVaccinatedAnimals = Animal::doesntHave('vaccinations')->paginate(20);
-
+            $nonVaccinatedAnimals = Animal::where('deleted', 0)
+            ->doesntHave('vaccinations')
+            ->paginate(20);
+        
             return view('animalsAdmin.animalsAdmin', ['animals' => $nonVaccinatedAnimals]);
         } else {
             $quantidadeAnimaisCadastrados = Animal::count();
@@ -50,7 +52,8 @@ class AnimalsController extends Controller
         $userRole = $user ? $user->role : null;
 
         if ($userRole == 1) {
-            $vaccinatedAnimals = Animal::has('vaccinations')->paginate(20);
+            $vaccinatedAnimals = Animal::where('deleted', 0)
+            ->has('vaccinations')->paginate(20);
 
             return view('animalsAdmin.animalsAdmin', ['animals' => $vaccinatedAnimals]);
         } else {
@@ -66,7 +69,8 @@ class AnimalsController extends Controller
         if ($userRole == 1) {
 
             $userId = $user ? $user->id : null;
-            $myAnimals = Animal::where('user_id', $userId)->paginate(20);
+            $myAnimals = Animal::where('deleted', 0)
+            ->where('user_id', $userId)->paginate(20);
 
             return view('animalsAdmin.animalsAdmin', ['animals' => $myAnimals]);
         } else {
@@ -83,7 +87,8 @@ class AnimalsController extends Controller
             $userId = $user ? $user->id : null;
 
             // Modifique a consulta para usar paginate
-            $animals = Animal::where('user_id', $userId)->paginate(20); // 10 é o número de itens por página
+            $animals = Animal::where('deleted', 0)
+            ->where('user_id', $userId)->paginate(20); // 10 é o número de itens por página
 
             return view('animalsAdmin.animalsAdmin', ['animals' => $animals]);
         } else {
@@ -151,22 +156,34 @@ class AnimalsController extends Controller
 
 
     public function destroy(string $id)
-    {
-        $user = Auth::user() ?? null;
-        $userRole = $user ? $user->role : null;
+{
+    $user = Auth::user() ?? null;
+    $userRole = $user ? $user->role : null;
 
-        if ($userRole == 1) {
-            $userId = $user ? $user->id : null;
-            $animal = Animal::findOrFail($id);
-            $animal->vaccinations()->delete();
-            $animal->delete();
+    if ($userRole == 1) {
+        $animal = Animal::findOrFail($id);
 
-            return redirect()->route('animals-index')->with('status', 'delete');
-        } else {
-            $quantidadeAnimaisCadastrados = Animal::count();
-            return view('dashboard')->with('quantidadeAnimaisCadastrados', $quantidadeAnimaisCadastrados);
+        // Remover a associação entre o animal e o usuário
+        $animal->deleted = 1;
+        $animal->user_id = null;
+        $animal->save();
+
+        // Verificar e atualizar as vacinas associadas ao animal
+        if ($animal->vaccinations->isNotEmpty()) {
+            foreach ($animal->vaccinations as $vaccination) {
+                $vaccination->deleted = 1;
+                $vaccination->save();
+            }
         }
+
+        return redirect()->route('animals-index')->with('status', 'delete');
+    } else {
+        $quantidadeAnimaisCadastrados = Animal::count();
+        return view('dashboard')->with('quantidadeAnimaisCadastrados', $quantidadeAnimaisCadastrados);
     }
+}
+
+    
 
 
     public function search(Request $request)
@@ -178,7 +195,8 @@ class AnimalsController extends Controller
             $searchTerm = $request->input('search');
     
             // Modifique a consulta para usar paginate
-            $animals = Animal::where('id', 'like', "%$searchTerm%")->paginate(20); // 20 é o número de itens por página
+            $animals = Animal::where('deleted', 0)
+            ->where('id', 'like', "%$searchTerm%")->paginate(20); // 20 é o número de itens por página
     
             return view('animalsAdmin.animalsAdmin', compact('animals'));
         } else {
@@ -196,8 +214,8 @@ class AnimalsController extends Controller
 
         if ($userRole == 1) {
 
-            $userId = $user ? $user->id : null;
-            $animal = Animal::find($id);
+            $animal = Animal::where('deleted', 0)
+            ->find($id);
             if (!empty($animal)) {
                 return view('animalsAdmin.animalsAdminInspe', ['animal' => $animal]);
             } else {

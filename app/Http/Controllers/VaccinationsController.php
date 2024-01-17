@@ -19,7 +19,8 @@ class VaccinationsController extends Controller
         if ($userRole == 1) {
             $animal = Animal::findOrFail($id);
 
-            $vaccinations = $animal->vaccinations;
+            // Buscar apenas as vacinas não deletadas
+            $vaccinations = $animal->vaccinations()->where('deleted', 0)->get();
 
             return view('animalsAdmin.animalsVaccinations', ['animal' => $animal, 'vaccinations' => $vaccinations]);
         } else {
@@ -28,6 +29,7 @@ class VaccinationsController extends Controller
             return view('dashboard')->with('quantidadeAnimaisCadastrados', $quantidadeAnimaisCadastrados);
         }
     }
+
 
     public function store(Request $request, $animalId = null)
     {
@@ -81,7 +83,8 @@ class VaccinationsController extends Controller
         if ($userRole == 1) {
 
             $vaccination = Vaccination::findOrFail($id);
-            $vaccination->delete();
+            $vaccination->deleted = 1;
+            $vaccination->save();
             return redirect()->route('animals-index')->with('status', 'delete');
         } else {
             $quantidadeAnimaisCadastrados = Animal::count();
