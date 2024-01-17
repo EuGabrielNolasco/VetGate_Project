@@ -8,6 +8,7 @@ use App\Models\Events;
 use App\Models\User;
 use App\Models\Animal;
 use Illuminate\Support\Carbon;
+use PhpParser\Node\Stmt\TryCatch;
 
 class EventsController extends Controller
 {
@@ -175,6 +176,17 @@ class EventsController extends Controller
             return view('dashboard')->with('quantidadeAnimaisCadastrados', $quantidadeAnimaisCadastrados);
         }
     }
+
+    public function showEvents()
+    {
+        // Retrieve the events you want to display (modify this according to your needs)
+        $events = Events::all();
+    
+        // Return the 'eventos' view for non-authenticated users
+        return view('eventsWelcome', compact('events'));
+    }
+    
+    
 
     public function update(Request $request, $id)
     {

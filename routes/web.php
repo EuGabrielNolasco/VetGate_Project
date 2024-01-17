@@ -7,9 +7,7 @@ use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\EventsController;
 use App\Http\Controllers\VaccinationsController;
 use App\Http\Controllers\StatisticsController;
-
-
-
+use App\Models\Events;
 
 Route::prefix('/admin/animals')->group(function () {
     // CRUD VER 
@@ -92,6 +90,8 @@ Route::middleware([
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/eventos', [EventsController::class, 'showEvents'])->name('show-events');
+
 
 //---------------------
 
