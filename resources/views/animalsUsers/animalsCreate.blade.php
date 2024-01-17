@@ -101,6 +101,7 @@
     <div class="col-md-6">
       <label for="inputIdade" class="form-label">Nascimento</label>
       <div class="input-group has-validation">
+        
         <input type="text" id="datepicker" name="birth" class="form-control" required readonly placeholder="dd/mm/YYYY">
 
         <script>

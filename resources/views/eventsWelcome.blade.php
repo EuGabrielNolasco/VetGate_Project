@@ -1,7 +1,7 @@
 <x-guest-layout>
-    <div class="pt-4 bg-gray-100">
-        <div class="min-h-screen flex flex-col items-center pt-6 sm:pt-0">
-        @if (Route::has('login'))
+    <div class="pt-1 bg-gray-100">
+        <div class="bg-gray-100 selection:bg-red-500 selection:text-white min-h-screen flex flex-col items-center ">
+    @if (Route::has('login'))
     <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
         @auth
             <a href="{{ url('/dashboard') }}" class="font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Painel</a>
