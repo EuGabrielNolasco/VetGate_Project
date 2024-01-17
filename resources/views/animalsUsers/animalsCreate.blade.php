@@ -6,18 +6,18 @@
     </h2>
   </x-slot>
   @if(Auth::check() && Auth::user()->role == 0)
-    @if($count == 10)
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <strong>Cuidado! </strong> Você já possui 10 animais, caso tentar cadastrar mais ira falhar!
-            <button type="button"  data-bs-dismiss="danger" aria-label="Close"></button>
-        </div>
-    @else
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <strong>Olá, Tudo bem?</strong> Você só pode cadastrar até 10 animais.
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
-@endif
+  @if($count == 10)
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>Cuidado! </strong> Você já possui 10 animais, caso tentar cadastrar mais ira falhar!
+    <button type="button" data-bs-dismiss="danger" aria-label="Close"></button>
+  </div>
+  @else
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Olá, Tudo bem?</strong> Você só pode cadastrar até 10 animais.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  @endif
+  @endif
 
 
 
@@ -65,14 +65,19 @@
       </div>
     </div>
     <div class="col-md-6">
-      <label for="inputNomePet" class="form-label">Especie</label>
+      <label for="inputNomePet" class="form-label">Espécie</label>
       <div class="input-group has-validation">
-        <input type="text" class="form-control" id="invalidCheck" required name="species">
+        <select class="form-select" id="inputNomePet" name="species" required>
+          @foreach ($species as $specie)
+          <option value="{{ $specie->id }}">{{ $specie->name }}</option>
+          @endforeach
+        </select>
         <div class="invalid-feedback">
-          Porfavor Insira a Especie.
+          Por favor, selecione a espécie.
         </div>
       </div>
     </div>
+
 
     <div class="col-md-6">
       <label for="inputNomePet" class="form-label">Raça</label>
@@ -97,6 +102,7 @@
       <label for="inputIdade" class="form-label">Nascimento</label>
       <div class="input-group has-validation">
         <input type="text" id="datepicker" name="birth" class="form-control" required readonly placeholder="dd/mm/YYYY">
+
         <script>
           $(document).ready(function() {
             $('#datepicker').datepicker({
@@ -115,7 +121,9 @@
             });
           });
         </script>
+
       </div>
+
     </div>
 
     <div class="col-md-6">
@@ -157,7 +165,7 @@
     </div>
 
     <div class="col-md-4">
-      <label for="inputPelo" class="form-label">Pelo do animal</label>
+      <label for="inputPelo" class="form-label">Pelo ou Pena do animal</label>
       <select id="inputPelo" class="form-select" name="fur_length">
         <option value=Curto>Curto</option>
         <option value=Medio>Medio</option>
@@ -181,10 +189,10 @@
       <div class="form-check">
         <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
         <label class="form-check-label" for="invalidCheck">
-          Agree to terms and conditions
+          Concorde com os termos e condições
         </label>
         <div class="invalid-feedback">
-          You must agree before submitting.
+          Você deve concordar antes de cadastrar o animal.
         </div>
       </div>
     </div>

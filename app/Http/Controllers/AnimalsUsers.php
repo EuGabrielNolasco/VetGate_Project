@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Animal;
+use App\Models\Species;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -45,10 +46,15 @@ class AnimalsUsers extends Controller
 
         if ($userRole == 0 || $userRole == 1) {
             $users = User::all();
+            $species = Species::all();
             $countAnimal = Animal::where('user_id', Auth::user()->id)->count();
 
-            return view('animalsUsers.animalsCreate', ['users' => $users,'count' => $countAnimal, 'loggedInUser' => $user]);
-        } else {
+            return view('animalsUsers.animalsCreate', [
+                'users' => $users,
+                'count' => $countAnimal,
+                'loggedInUser' => $user,
+                'species' => $species,
+            ]);        } else {
             $quantidadeAnimaisCadastrados = Animal::count();
 
             return view('dashboard')->with('quantidadeAnimaisCadastrados', $quantidadeAnimaisCadastrados);
