@@ -11,7 +11,7 @@
       <div class="card-body">
         <h5 class="card-title">Painel Administrador</h5>
         <p class="card-text">Clique no botão abaixo para criar um admin, gerenciar os atuais e visualizar animais e vacinas deletadas.</p>
-        <a href="{{ route('admin-panel') }}" class="btn btn-success">Gerenciar Admin</a>
+        <a href="{{ route('admin-panel') }}" class="btn btn-success">Painel Administrador</a>
       </div>
     </div>
     @endif
@@ -19,7 +19,7 @@
       <div class="card-body">
         <h5 class="card-title">Editar Eventos</h5>
         <p class="card-text">Clique no botão abaixo para editar eventos.</p>
-        <a href="{{ route('events-dashboard') }}" class="btn btn-primary">Editar Eventos</a>
+        <a href="{{ route('events-dashboard') }}" class="btn btn-primary">Editor de Eventos</a>
       </div>
     </div>
   </div>
@@ -28,7 +28,8 @@
 
     <div id="event-create-container" class="col-md-6 offset-md-3">
 
-      <h1>Crie o seu evento</h1>
+      <h1>Crie um Evento:</h1>
+      <hr>
       <br>
       <form action="/events" method="post" enctype="multipart/form-data">
         @csrf

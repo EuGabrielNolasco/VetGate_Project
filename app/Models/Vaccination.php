@@ -18,6 +18,7 @@ class Vaccination extends Model
         'dewormed_status', 
         'date_dewormed',
         'vaccinated_status',
+        'deleted',
     ];
 
     public function animal()

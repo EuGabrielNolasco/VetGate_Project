@@ -22,7 +22,7 @@
             <div class="card-body">
                 <h5 class="card-title">Cadastrar Administradores</h5>
                 <p class="card-text">Clique no botão abaixo para gerenciar admins.</p>
-                <a href="{{ route('admin-create') }}" class="btn btn-success">Cadastrar Admins</a>
+                <a href="{{ route('admin-create') }}" class="btn btn-success">Abrir</a>
             </div>
         </div>
         <br>
@@ -30,7 +30,15 @@
             <div class="card-body">
                 <h5 class="card-title">Gerenciar Administradores</h5>
                 <p class="card-text">Clique no botão abaixo para gerenciar admins.</p>
-                <a href="{{ route('admin-view') }}" class="btn btn-primary">Gerenciar Admins</a>
+                <a href="{{ route('admin-view') }}" class="btn btn-primary">Abrir</a>
+            </div>
+        </div>
+        <br>
+        <div class="card col-sm-12 mt-3">
+            <div class="card-body">
+                <h5 class="card-title">Gerenciar Deleteados</h5>
+                <p class="card-text">Clique no botão abaixo para gerenciar animais e vacinas deletadas</p>
+                <a href="{{ route('admin-deleted') }}" class="btn btn-primary">Abrir</a>
             </div>
         </div>
 

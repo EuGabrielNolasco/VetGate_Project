@@ -14,7 +14,7 @@ return new class extends Migration
         // Criação da tabela 'vaccinations'
         Schema::create('vaccinations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('animal_id')->constrained();
+            $table->foreignId('animal_id')->nullable()->constrained();
             $table->string('health_status')->nullable();
             $table->string('respiratory_rate')->nullable();
             $table->string('heart_rate')->nullable();

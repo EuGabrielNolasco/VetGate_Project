@@ -3,6 +3,7 @@
 use App\Http\Controllers\AnimalsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AnimalsUsers;
+use App\Http\Controllers\DeletedController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\EventsController;
 use App\Http\Controllers\VaccinationsController;
@@ -122,6 +123,18 @@ Route::middleware(['auth', 'role:admin'])->prefix('/admin')->group(function () {
     Route::get('/create', [UsuariosController::class, 'adminCreate'])->name('admin-create');
     Route::post('/store', [UsuariosController::class, 'adminStore'])->name('admin-store');
     Route::delete('/destroy/{id}', [UsuariosController::class, 'adminDestroy'])->where('id', '[0-9]+')->name('admin-destroy');
+    //deleteds animal page
+    Route::get('/deleteds', [DeletedController::class, 'adminDeleted'])->name('admin-deleted');
+    Route::get('/deleteds/animals/vaccinations/{id}', [DeletedController::class, 'adminVaccinationsDeleteds'])->name('vaccinations-deleted');
+    Route::delete('/deleteds/{id}', [DeletedController::class, 'AnimalDeleteddestroy'])->where('id', '[0-9]+')->name('animals-deleteds-destroy');
+    Route::get('/deleteds/{id}/inspect', [DeletedController::class, 'AnimalDeletedInspect'])->where('id', '[0-9]+')->name('Animal-Deleted-inspect');
+    Route::get('/deleteds/search', [DeletedController::class, 'searchDeleted'])->name('animals-search-deleteds');
+    //deleteds vaccinations page
+    Route::get('/deleteds/vaccinations/{id}/inspect', [DeletedController::class, 'VaccinationDeletedInspect'])->where('id', '[0-9]+')->name('Vaccination-Deleted-inspect');
+
+
+
+
 });
 
 
