@@ -81,16 +81,4 @@ class StatisticsController extends Controller
             return view('dashboard')->with('quantidadeAnimaisCadastrados', $quantidadeAnimaisCadastrados);
         }
     }
-    private function getMonthlyCounts($tableName, $months, $currentDate, $selectedYear)
-    {
-        return $months->map(function ($name, $month) use ($currentDate, $tableName, $selectedYear) {
-            return [
-                'month' => $name,
-                'count' => DB::table($tableName)
-                    ->whereMonth('created_at', $month)
-                    ->whereYear('created_at', '=', $selectedYear)
-                    ->count(),
-            ];
-        });
-    }
 }

@@ -15,9 +15,8 @@ class DeletedController extends Controller
     public function adminDeleted()
     {
         $user = Auth::user();
-        $userRole = $user ? $user->role : null;
 
-        if ($userRole == 1) {
+        if ($user && $user->id == 1) {
 
             $animals = Animal::where('deleted', 1)
            ->paginate(8); 
@@ -32,11 +31,9 @@ class DeletedController extends Controller
     }
     public function adminVaccinationsDeleteds($id)
     {
-        $user = Auth::user() ?? null;
+        $user = Auth::user();
 
-        $userRole = $user ? $user->role : null;
-
-        if ($userRole == 1) {
+        if ($user && $user->id == 1) {
             $animal = Animal::findOrFail($id);
 
             // Buscar apenas as vacinas não deletadas
@@ -51,10 +48,9 @@ class DeletedController extends Controller
     }
     public function AnimalDeleteddestroy(string $id)
     {
-        $user = Auth::user() ?? null;
-        $userRole = $user ? $user->role : null;
-    
-        if ($userRole == 1) {
+        $user = Auth::user();
+
+        if ($user && $user->id == 1) {
             $animal = Animal::with('vaccinations')->findOrFail($id);
     
             // Remover a associação entre o animal e o usuário
@@ -81,10 +77,9 @@ class DeletedController extends Controller
 
     public function AnimalDeletedInspect(string $id)
     {
-        $user = Auth::user() ?? null;
-        $userRole = $user ? $user->role : null;
+        $user = Auth::user();
 
-        if ($userRole == 1) {
+        if ($user && $user->id == 1) {
 
             $animal = Animal::where('deleted', 1)
             ->find($id);
@@ -102,10 +97,9 @@ class DeletedController extends Controller
 
     public function searchDeleted(Request $request)
     {
-        $user = Auth::user() ?? null;
-        $userRole = $user ? $user->role : null;
-    
-        if ($userRole == 1) {
+        $user = Auth::user();
+
+        if ($user && $user->id == 1) {
             $searchTerm = $request->input('search');
     
             // Modifique a consulta para usar paginate
@@ -125,10 +119,9 @@ class DeletedController extends Controller
 
     public function VaccinationDeletedInspect(string $id)
     {
-        $user = Auth::user() ?? null;
-        $userRole = $user ? $user->role : null;
+        $user = Auth::user();
 
-        if ($userRole == 1) {
+        if ($user && $user->id == 1) {
 
             $vaccination = Vaccination::where('deleted', 1)
             ->find($id);
@@ -146,10 +139,9 @@ class DeletedController extends Controller
 
     public function VaccinationDeleteddestroy(string $vaccinationId)
     {
-        $user = Auth::user() ?? null;
-        $userRole = $user ? $user->role : null;
-    
-        if ($userRole == 1) {
+        $user = Auth::user();
+
+        if ($user && $user->id == 1) {
             $vaccination = Vaccination::findOrFail($vaccinationId);
     
             // Excluir permanentemente a vacina do banco de dados
@@ -164,10 +156,9 @@ class DeletedController extends Controller
 
     public function searchVaccinationsDeleted(Request $request)
     {
-        $user = Auth::user() ?? null;
-        $userRole = $user ? $user->role : null;
-    
-        if ($userRole == 1) {
+        $user = Auth::user();
+
+        if ($user && $user->id == 1) {
             $searchTerm = $request->input('search');
     
             // Modifique a consulta para usar paginate

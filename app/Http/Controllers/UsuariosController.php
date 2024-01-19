@@ -35,7 +35,9 @@ class UsuariosController extends Controller
 
             return view('admin.users', ['animals' => $animals, 'users' => $users]);
         } else {
-            return view('dashboard');
+            $quantidadeAnimaisCadastrados = Animal::count();
+
+            return view('dashboard')->with('quantidadeAnimaisCadastrados', $quantidadeAnimaisCadastrados);
         }
     }
 
@@ -150,7 +152,9 @@ class UsuariosController extends Controller
             Auth::guard('web')->loginUsingId($user->id);
             return redirect()->route('dashboard');
         } else {
-            return view('dashboard');
+            $quantidadeAnimaisCadastrados = Animal::count();
+
+            return view('dashboard')->with('quantidadeAnimaisCadastrados', $quantidadeAnimaisCadastrados);
         }
     }
 
@@ -168,8 +172,10 @@ class UsuariosController extends Controller
 
         if ($userId == 1) {
             return view('admin.panelAdmin');
-        } else {
-            return view('dashboard');
+        }  else {
+            $quantidadeAnimaisCadastrados = Animal::count();
+
+            return view('dashboard')->with('quantidadeAnimaisCadastrados', $quantidadeAnimaisCadastrados);
         }
     }
     public function adminCreate()
@@ -180,7 +186,9 @@ class UsuariosController extends Controller
         if ($userId == 1) {
             return view('admin.registerAdmin');
         } else {
-            return view('dashboard');
+            $quantidadeAnimaisCadastrados = Animal::count();
+
+            return view('dashboard')->with('quantidadeAnimaisCadastrados', $quantidadeAnimaisCadastrados);
         }
     }
     public function adminView()
@@ -197,7 +205,9 @@ class UsuariosController extends Controller
 
             return view('admin.usersAdmin', ['animals' => $animals, 'users' => $users]);
         } else {
-            return view('dashboard');
+            $quantidadeAnimaisCadastrados = Animal::count();
+
+            return view('dashboard')->with('quantidadeAnimaisCadastrados', $quantidadeAnimaisCadastrados);
         }
     }
     public function adminDestroy($id)
@@ -228,7 +238,9 @@ class UsuariosController extends Controller
             $user->delete();
             return redirect()->route('admin-view')->with('success', 'User and associated data deleted successfully');
         } else {
-            return view('dashboard');
+            $quantidadeAnimaisCadastrados = Animal::count();
+
+            return view('dashboard')->with('quantidadeAnimaisCadastrados', $quantidadeAnimaisCadastrados);
         }
     }
 }

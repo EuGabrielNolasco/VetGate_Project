@@ -225,7 +225,8 @@ class EventsController extends Controller
     
             return redirect('/events')->with('msg', 'Evento editado com sucesso!');
         } else {
-            return view('dashboard');
+            $quantidadeAnimaisCadastrados = Animal::count();
+            return view('dashboard')->with('quantidadeAnimaisCadastrados', $quantidadeAnimaisCadastrados);
         }
     }
     

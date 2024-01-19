@@ -102,7 +102,7 @@ use Illuminate\Pagination\Paginator;
                 </nav>
             </div>
             <br>
-
+</div>
             <h3>
                 Todas Vacinas Deletadas
             </h3>
@@ -175,10 +175,5 @@ use Illuminate\Pagination\Paginator;
                 <br>
 
             </div>
-
-
-
-
-        </div>
 
 </x-app-layout>
