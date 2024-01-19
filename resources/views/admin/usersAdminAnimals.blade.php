@@ -11,8 +11,8 @@ use Carbon\Carbon; ?>
     <div class="container mt-5">
 
     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-    <a href="/admin/view" class="btn btn-warning">Voltar</a>
-</div>
+            <button type="button" class="btn btn-warning" onclick="goBack()">Voltar</button>
+        </div>
         <p><br>O administrador tem um total de {{ $totalAnimais }} animais.</p>
         <div class="table-responsive">
 

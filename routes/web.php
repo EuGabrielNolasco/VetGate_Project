@@ -41,7 +41,7 @@ Route::prefix('/admin/animals')->group(function () {
 
     Route::get('/vaccinated/{page?}', [AnimalsController::class, 'showVaccinatedPaginated'])->name('animals-admin-filter-vaccinated');
 
-    Route::get('/my-Animals/{page?}', [AnimalsController::class, 'myAnimals'])->name('animals-admin-filter-my-Animals');
+    Route::get('/my-Animals/{page?}', [AnimalsController::class, 'myAnimals'])->name('animals-admin-filter-my-Animals');   
 });
 
 
@@ -131,6 +131,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('/admin')->group(function () {
     Route::get('/deleteds/search', [DeletedController::class, 'searchDeleted'])->name('animals-search-deleteds');
     //deleteds vaccinations page
     Route::get('/deleteds/vaccinations/{id}/inspect', [DeletedController::class, 'VaccinationDeletedInspect'])->where('id', '[0-9]+')->name('Vaccination-Deleted-inspect');
+    Route::delete('/deleteds/vaccinations/{id}', [DeletedController::class, 'VaccinationDeleteddestroy'])->where('id', '[0-9]+')->name('vaccination-deleteds-destroy');   
+    Route::get('/deleteds/vaccinations/search', [DeletedController::class, 'searchVaccinationsDeleted'])->name('vaccinations-search-deleteds');
+
+
 
 
 

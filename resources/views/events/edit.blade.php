@@ -11,7 +11,9 @@ use Carbon\Carbon;
     </h2>
   </x-slot>
   <div class="container mt-5">
-
+  <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+            <button type="button" class="btn btn-warning" onclick="goBack()">Voltar</button>
+        </div>
     <div class="col-md-6 offset-md-3">
 
       <h1>Editando: {{ $event->title }}</h1>

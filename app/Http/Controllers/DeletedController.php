@@ -111,8 +111,11 @@ class DeletedController extends Controller
             // Modifique a consulta para usar paginate
             $animals = Animal::where('deleted', 1)
             ->where('id', 'like', "%$searchTerm%")->paginate(8); 
+
+            $vaccinations = Vaccination::where('deleted', 1)
+            ->paginate(8); 
     
-            return view('deleteds.deletedAdmin', compact('animals'));
+            return view('deleteds.deletedAdmin', ['animals' => $animals, 'vaccinations' => $vaccinations]);
         } else {
             $quantidadeAnimaisCadastrados = Animal::count();
     
@@ -140,6 +143,46 @@ class DeletedController extends Controller
             return view('dashboard')->with('quantidadeAnimaisCadastrados', $quantidadeAnimaisCadastrados);
         }
     }
+
+    public function VaccinationDeleteddestroy(string $vaccinationId)
+    {
+        $user = Auth::user() ?? null;
+        $userRole = $user ? $user->role : null;
     
+        if ($userRole == 1) {
+            $vaccination = Vaccination::findOrFail($vaccinationId);
+    
+            // Excluir permanentemente a vacina do banco de dados
+            $vaccination->forceDelete();
+    
+            return redirect()->route('admin-deleted')->with('status', 'delete');
+        } else {
+            $quantidadeAnimaisCadastrados = Animal::count();
+            return view('dashboard')->with('quantidadeAnimaisCadastrados', $quantidadeAnimaisCadastrados);
+        }
+    }
+
+    public function searchVaccinationsDeleted(Request $request)
+    {
+        $user = Auth::user() ?? null;
+        $userRole = $user ? $user->role : null;
+    
+        if ($userRole == 1) {
+            $searchTerm = $request->input('search');
+    
+            // Modifique a consulta para usar paginate
+            $vaccinations = Vaccination::where('deleted', 1)
+            ->where('id', 'like', "%$searchTerm%")->paginate(8); 
+
+            $animals = Animal::where('deleted', 1)
+            ->paginate(8); 
+    
+            return view('deleteds.deletedAdmin', ['animals' => $animals, 'vaccinations' => $vaccinations]);
+        } else {
+            $quantidadeAnimaisCadastrados = Animal::count();
+    
+            return view('dashboard')->with('quantidadeAnimaisCadastrados', $quantidadeAnimaisCadastrados);
+        }
+    }
     
 }
