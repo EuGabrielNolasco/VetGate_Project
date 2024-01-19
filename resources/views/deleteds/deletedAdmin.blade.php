@@ -7,7 +7,7 @@ use Illuminate\Pagination\Paginator;
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Todos Animais e Vacinas') }}
+            {{ __('Animais e Vacinas Deletados') }}
         </h2>
     </x-slot>
     <div class="container my-5">
@@ -129,7 +129,7 @@ use Illuminate\Pagination\Paginator;
                             <th scope="col">Id</th>
                             <th scope="col">Contactante</th>
                             <th scope="col">Vermifugação</th>
-                            <th scope="col">Cadastro</th>
+                            <th scope="col">Data de Cadastro</th>
                             <th scope="col">Animal Id</th>
                             <th scope="col">Info</th>
                             <th scope="col">Remover</th>

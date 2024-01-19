@@ -75,7 +75,7 @@ Route::prefix('/admin/users')->group(function () {
 });
 
 Route::fallback(function () {
-    return "Error";
+    return "ERROR HTTP 400";
 });
 
 Route::middleware([
