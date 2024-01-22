@@ -133,20 +133,20 @@ class EventsController extends Controller
     {
         $user = Auth::user() ?? null;
         $userRole = $user ? $user->role : null;
-    
+
         if ($userRole == 1) {
             // Obtenha o evento
             $event = Events::findOrFail($id);
-    
+
             // Salve o caminho da imagem antiga
             $oldImagePath = $event->image;
-    
+
             // Exclua o evento
             $event->delete();
-    
+
             // Construa o caminho completo para a imagem antiga
             $fullOldImagePath = public_path('img/events/' . $oldImagePath);
-    
+
             // Remova a imagem antiga após excluir o evento
             if (isset($oldImagePath) && file_exists($fullOldImagePath)) {
                 unlink($fullOldImagePath);
@@ -156,11 +156,11 @@ class EventsController extends Controller
             }
         } else {
             $quantidadeAnimaisCadastrados = Animal::count();
-    
+
             return view('dashboard')->with('quantidadeAnimaisCadastrados', $quantidadeAnimaisCadastrados);
         }
     }
-    
+
 
     public function edit($id)
     {
@@ -181,53 +181,52 @@ class EventsController extends Controller
     {
         // Retrieve the events you want to display (modify this according to your needs)
         $events = Events::all();
-    
+
         // Return the 'eventos' view for non-authenticated users
         return view('eventsWelcome', compact('events'));
     }
-    
-    
+
+
 
     public function update(Request $request, $id)
     {
         $user = Auth::user();
         $userRole = $user ? $user->role : null;
-    
+
         if ($userRole == 1) {
             $event = Events::findOrFail($id);
-    
+
             // Salve o caminho da imagem atual em uma variável
             $oldImagePath = $event->image;
-    
+
             $data = $request->except(['_token', '_method']);
-    
+
             // Converta a data para o formato aceito pelo MySQL (Y-m-d)
             $data['date'] = \Carbon\Carbon::createFromFormat('d/m/Y', $data['date'])->format('Y-m-d');
-    
+
             if ($request->hasFile('image') && $request->file('image')->isValid()) {
                 $requestImage = $request->image;
-    
+
                 $extension = $requestImage->extension();
                 $imageName = md5($requestImage->getClientOriginalName() . strtotime("now")) . "." . $extension;
                 $requestImage->move(public_path('img/events'), $imageName);
                 $data['image'] = $imageName;
-    
+
                 // Construa o caminho completo para a imagem antiga
                 $fullOldImagePath = public_path('img/events/' . $oldImagePath);
-    
+
                 // Remova a imagem antiga após a atualização
                 if (isset($oldImagePath) && file_exists($fullOldImagePath)) {
                     unlink($fullOldImagePath);
                 }
             }
-    
+
             $event->update($data);
-    
+
             return redirect('/events')->with('msg', 'Evento editado com sucesso!');
         } else {
             $quantidadeAnimaisCadastrados = Animal::count();
             return view('dashboard')->with('quantidadeAnimaisCadastrados', $quantidadeAnimaisCadastrados);
         }
     }
-    
 }

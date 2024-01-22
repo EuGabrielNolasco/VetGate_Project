@@ -172,7 +172,7 @@ class UsuariosController extends Controller
 
         if ($userId == 1) {
             return view('admin.panelAdmin');
-        }  else {
+        } else {
             $quantidadeAnimaisCadastrados = Animal::count();
 
             return view('dashboard')->with('quantidadeAnimaisCadastrados', $quantidadeAnimaisCadastrados);
