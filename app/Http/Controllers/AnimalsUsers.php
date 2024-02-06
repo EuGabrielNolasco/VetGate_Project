@@ -111,7 +111,6 @@ class AnimalsUsers extends Controller
 
         if ($userRole == 0 || $userRole == 1) {
 
-            $userId = $user ? $user->id : null;
             $animal = Animal::find($id);
             if (!empty($animal)) {
                 return view('animalsUsers.animalsEdit', ['animal' => $animal]);
@@ -184,7 +183,6 @@ class AnimalsUsers extends Controller
         $userRole = $user ? $user->role : null;
 
         if ($userRole == 0 || $userRole == 1) {
-            $userId = $user ? $user->id : null;
 
             $animal = Animal::findOrFail($id);
             $animal->deleted = 1;
