@@ -5,32 +5,35 @@
         </h2>
     </x-slot>
 
+    <div class="container mt-5">
 
     <div class="text-center my-5">
         <h1>Grafico Pizza</h1>
         <hr />
+        
     </div>
-    <div class="container mt-5">
-        <div class="mx-auto" style="width: 70%;">
-            <canvas id="graficoPizza" height="300"></canvas>
-        </div>
-        <div class="text-center my-5">
-        <h1>Grafico  Linha</h1>
-        <hr />
-        <div class="text-center my-5">
-    <form method="get" action="{{ route('statistics-index') }}">
-        <label for="year">Escolha o ano:</label>
-        <select name="year" id="year">
-            @for ($i = $currentDate->year; $i >= $currentDate->year - 10; $i--)
-                <option value="{{ $i }}" {{ $selectedYear == $i ? 'selected' : '' }}>{{ $i }}</option>
-            @endfor
-        </select>
-        <button type="submit">Atualizar</button>
-    </form>
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Olá, Tudo bem?</strong> Este gráfico apresenta informações relevantes sobre estatísticas gerais, fornecendo insights valiosos relacionados a animais vacinados, animais não vacinados, total de animais, total de vacinas, usuários com animais e usuários sem animais.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 
 
-    </div>        <div class="mx-auto" style="width: 100%;">
+        <div class="mx-auto" style="width: 82%;">
+            <canvas id="graficoPizza" height="300"></canvas>
+        </div>
+        <br>
+            <div class="text-center my-5">
+
+        <h1>Grafico  Linha</h1>
+        <hr />
+
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Olá, Tudo bem?</strong> Este grafico representa qual mês de todos os anos tem mais cadastros de contas, animais e vacinas.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+    </div>        
+    <div class="mx-auto" style="width: 100%;">
             <canvas id="graficoLinha" height="300"></canvas>
         </div><br>
     </div>
@@ -38,29 +41,31 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
-        var ctxPizza = document.getElementById('graficoPizza').getContext('2d');
-        var myChart = new Chart(ctxPizza, {
-            type: 'doughnut',
-            data: {
-                labels: ['Animais Vacinados', 'Animais Não Vacinados', 'Total de Animais', 'Total Vacinas'],
-                datasets: [{
-                    data: [{{ $animaisComVacinas }}, {{ $animaisSemVacinas }}, {{ $totalAnimais }}, {{ $totalVacinas }}],
-                    backgroundColor: ['#33ff33', 'red', 'blue', '#ff0084'],
-                }],
+    var ctxPizza = document.getElementById('graficoPizza').getContext('2d');
+    var myChart = new Chart(ctxPizza, {
+        type: 'doughnut',
+        data: {
+            labels: ['Animais Vacinados', 'Animais Não Vacinados', 'Total De Animais', 'Total De Vacinas', 'Usuario Com Animais','Usuario Sem Animais'],
+
+            datasets: [{
+                data: [{{ $animaisComVacinas }}, {{ $animaisSemVacinas }}, {{ $totalAnimais }}, {{ $totalVacinas }}, {{ $usuariosComAnimais }}, {{ $usuariosSemAnimais }}],
+                backgroundColor: ['#4CAF50', '#FF5252', '#2196F3', '#E91E63', '#FFC107', '#607D8B'],
+            }],
+        },
+        
+        options: {
+            responsive: true,
+            cutout: '40%', // ajuste conforme necessário
+            radius: '95%', // ajuste conforme necessário
+            rotation: 0,
+            circumference: 360,
+            animation: {
+                animateRotate: true,
+                animateScale: true,
             },
-            options: {
-                responsive: true,
-                cutout: '40%', // ajuste conforme necessário
-                radius: '95%', // ajuste conforme necessário
-                rotation: 0,
-                circumference: 360,
-                animation: {
-                    animateRotate: true,
-                    animateScale: true,
-                },
-            },
-        });
-    </script>
+        },
+    });
+</script>
 
 <script>
     var ctxBar = document.getElementById('graficoLinha').getContext('2d');
@@ -70,20 +75,20 @@
             datasets: [{
                 label: 'Contas de Usuário',
                 data: {!! json_encode($userMonthlyCounts->pluck('count')->toArray()) !!},
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: '#4CAF50',
+                borderColor: '#4CAF50',
                 borderWidth: 1,
             }, {
                 label: 'Criações de Animais',
                 data: {!! json_encode($animalMonthlyCounts->pluck('count')->toArray()) !!},
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgba(255, 99, 132, 1)',
+                backgroundColor: '#E91E63',
+                borderColor: '#E91E63',
                 borderWidth: 1,
             }, {
                 label: 'Vacinações',
                 data: {!! json_encode($vaccinationMonthlyCounts->pluck('count')->toArray()) !!},
-                backgroundColor: 'rgba(255, 206, 86, 0.2)',
-                borderColor: 'rgba(255, 206, 86, 1)',
+                backgroundColor: '#FFC107',
+                borderColor: '#FFC107',
                 borderWidth: 1,
             }],
             labels: {!! json_encode($userMonthlyCounts->pluck('month')->toArray()) !!}
@@ -99,6 +104,7 @@
         },
     });
 </script>
+
 
 
 

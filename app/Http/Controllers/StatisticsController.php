@@ -71,10 +71,13 @@ class StatisticsController extends Controller
 
             $totalAnimais = Animal::count();
             $totalVacinas = Vaccination::count();
+            $usuariosComAnimais = User::whereHas('animals')->count();
+            $usuariosSemAnimais = User::count();
+            $usuariosSemAnimais = $usuariosSemAnimais - $usuariosComAnimais;
             $animaisComVacinas = Animal::whereHas('vaccinations')->count();
             $animaisSemVacinas = $totalAnimais - $animaisComVacinas;
 
-            return view('admin.statistics', compact('totalAnimais', 'animaisComVacinas', 'animaisSemVacinas', 'totalVacinas', 'userMonthlyCounts', 'animalMonthlyCounts', 'vaccinationMonthlyCounts', 'selectedYear', 'currentDate'));
+            return view('admin.statistics', compact('totalAnimais', 'animaisComVacinas', 'animaisSemVacinas', 'totalVacinas','usuariosComAnimais','usuariosSemAnimais' , 'userMonthlyCounts', 'animalMonthlyCounts', 'vaccinationMonthlyCounts', 'selectedYear', 'currentDate'));
         } else {
             $quantidadeAnimaisCadastrados = Animal::count();
 
