@@ -181,18 +181,39 @@ class AnimalsUsers extends Controller
     {
         $user = Auth::user() ?? null;
         $userRole = $user ? $user->role : null;
-
+    
         if ($userRole == 0 || $userRole == 1) {
-
             $animal = Animal::findOrFail($id);
+    
+            // Verificar se há vacinas associadas ao animal
+            $latestVaccination = $animal->vaccinations()->latest()->first();
+    
+            // Verificar se a última vacina foi administrada há mais de 30 dias
+            if ($latestVaccination && Carbon::parse($latestVaccination->created_at)->diffInDays(now()) <= 30) {
+                return redirect()->route('animals-index')->with('status', 'delete_failed');
+            }
+    
+            // Verificar se o animal foi cadastrado há mais de 7 dias
+            if (Carbon::parse($animal->created_at)->diffInDays(now()) <= 7) {
+                return redirect()->route('animals-index')->with('status', 'delete_failed');
+            }
+    
+            // Alterar o campo 'deleted' para 1 em todas as vacinas associadas ao animal
+            foreach ($animal->vaccinations as $vaccination) {
+                $vaccination->deleted = 1;
+                $vaccination->save();
+            }
+    
+            // Alterar o campo 'deleted' para 1 no animal
             $animal->deleted = 1;
             $animal->user_id = null;
             $animal->save();
-
+    
             return redirect()->route('animals-index')->with('status', 'delete');
         } else {
             $quantidadeAnimaisCadastrados = Animal::count();
             return view('dashboard')->with('quantidadeAnimaisCadastrados', $quantidadeAnimaisCadastrados);
         }
     }
+    
 }

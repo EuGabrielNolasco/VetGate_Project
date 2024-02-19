@@ -5,7 +5,7 @@
         </h2>
     </x-slot><br>
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
-  <strong>Ola!</strong> Leve seu animal para algum evento programado para regularizar suas vacinas!
+  <strong>Ola!</strong> Leve seu animal para algum <a href="/events">evento</a> programado para regularizar suas vacinas!
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
     <div class="container mt-3">
