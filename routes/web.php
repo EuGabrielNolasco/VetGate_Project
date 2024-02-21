@@ -3,7 +3,7 @@
 use App\Http\Controllers\AnimalsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AnimalsUsers;
-use App\Http\Controllers\DeletedController;
+use App\Http\Controllers\DeletedController; 
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\EventsController;
 use App\Http\Controllers\VaccinationsController;

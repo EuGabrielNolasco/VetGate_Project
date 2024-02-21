@@ -24,19 +24,46 @@
         <br>
             <div class="text-center my-5">
 
-        <h1>Grafico  Linha</h1>
-        <hr />
-
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-    <strong>Olá, Tudo bem?</strong> Este grafico representa qual mês de todos os anos tem mais cadastros de contas, animais e vacinas.
+            <div class="my-5 text-center">
+  <h2>Gráfico Linha</h2>
+  <hr />
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Olá, Tudo bem?</strong> Este gráfico representa qual mês de todos os anos tem mais cadastros de contas, animais e vacinas.
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
+  <select id="yearSelector">
+    </select>
+  <div class="mx-auto" style="width: 100%;">
+    <canvas id="graficoLinha" height="300"></canvas>
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    </div>        
-    <div class="mx-auto" style="width: 100%;">
-            <canvas id="graficoLinha" height="300"></canvas>
-        </div><br>
-    </div>
+<script>
+// Assuming Chart.js is being used...
+var ctxBar = document.getElementById('graficoLinha').getContext('2d');
+var barChart = new Chart(ctxBar, {
+  // ... (original chart configuration)
+});
+
+// Create options dynamically:
+var yearOptions = "";
+for (var year = {{ $currentDate->year }} - 10; year <= {{ $currentDate->year }}; year++) {
+  yearOptions += "<option value='" + year + "'>" + year + "</option>";
+}
+$("#yearSelector").html(yearOptions);
+
+$("#yearSelector").change(function() {
+  var selectedYear = $(this).val();
+
+  // Filter labels and data based on selectedYear
+  // (update the labels and data arrays accordingly)
+
+  // Update the chart using chart.update() or equivalent 
+  barChart.update();
+  
+});
+</script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
